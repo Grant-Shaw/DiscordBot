@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Interactivity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,9 +27,55 @@ namespace DiscordBot
                 .SendMessageAsync((numberOne + numberTwo).ToString())
                 .ConfigureAwait(false);
 
+            
         }
 
 
+        [Command("respondmessage")]
+        public async Task Respondmessage(CommandContext ctx)
+        {
+            var interactivity = ctx.Client.GetInteractivity();
+
+            var message = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel).ConfigureAwait(false);
+
+            await ctx.Channel.SendMessageAsync(message.Result.Content);
+
+        }
+
+        [Command("respondreaction")]
+        public async Task Respondreaction(CommandContext ctx)
+        {
+            var interactivity = ctx.Client.GetInteractivity();
+
+            var message = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel).ConfigureAwait(false);
+
+            await ctx.Channel.SendMessageAsync(message.Result.Reactions.ToString());
+
+        }
+
+
+        
+
+
+
+
+        //[Command("Start Queue")]
+        //[Description ("Starts a queue for singing")]
+
+
+
+
+        /*
+        [RequireRoles(RoleCheckMode.All, "Moderator")]
+        [Command("Ready")]
+        [Description("Use this command when ready to sing, will mute all members of channel")]
+        public async Task Ready(CommandContext ctx)
+        {
+            
+            
+
+        }
+        */
 
 
     }

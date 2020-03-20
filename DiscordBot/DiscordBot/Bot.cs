@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using Newtonsoft.Json;
@@ -15,6 +16,9 @@ namespace DiscordBot
     {
 
         public DiscordClient Client { get; private set; }
+
+        public InteractivityExtension Interactivity { get; private set; }
+
         public CommandsNextExtension Commands { get; private set; }
 
 
@@ -50,14 +54,17 @@ namespace DiscordBot
                 EnableDms = false,
                 IgnoreExtraArguments = true,
                 
-
-
-
             };
+
+            Client.UseInteractivity(new InteractivityConfiguration());
+            
+
+
 
             Commands = Client.UseCommandsNext(commandsConfig);
 
             Commands.RegisterCommands<FunCommands>();
+            Commands.RegisterCommands<TeamCommands>();
 
             await Client.ConnectAsync();
 
@@ -70,6 +77,7 @@ namespace DiscordBot
             return Task.CompletedTask;
         }
 
+     
 
 
 
