@@ -36,26 +36,28 @@ namespace DiscordBot
                 AutoReconnect = true,
                 LogLevel = LogLevel.Debug,
                 UseInternalLogHandler = true
-
             };
 
             Client = new DiscordClient(config);
 
             Client.Ready += OnClientReady;
 
-
             var commandsConfig = new CommandsNextConfiguration
             {
 
-                StringPrefixes = new string [] {configJson.Prefix},
+                StringPrefixes = new string[] { configJson.Prefix },
                 EnableMentionPrefix = true,
-                EnableDms = false
+                EnableDms = false,
+                IgnoreExtraArguments = true,
+                
 
 
 
             };
 
             Commands = Client.UseCommandsNext(commandsConfig);
+
+            Commands.RegisterCommands<FunCommands>();
 
             await Client.ConnectAsync();
 
